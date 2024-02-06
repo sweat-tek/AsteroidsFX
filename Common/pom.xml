@@ -11,10 +11,6 @@
     <name>Common</name>
     
     <dependencies>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
