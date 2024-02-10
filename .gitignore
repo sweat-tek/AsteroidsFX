@@ -30,3 +30,5 @@ replay_pid*
 /Bullet/target/
 /CommonBullet/target/
 /.idea/
+# Ignore target recursively
+/**/target
