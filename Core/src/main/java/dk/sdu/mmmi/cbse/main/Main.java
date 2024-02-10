@@ -91,7 +91,7 @@ public class Main extends Application {
 
     }
 
-    void addNewPolygon(Entity entity) {
+    private void addNewPolygon(Entity entity) {
         Polygon polygon = new Polygon(entity.getPolygonCoordinates());
         polygons.put(entity, polygon);
         this.gamePane.getChildren().add(polygon);
