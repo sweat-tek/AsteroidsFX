@@ -23,10 +23,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
-/core/target/
-/Core/target/
-/Common/target/
-/Player/target/
-/Bullet/target/
-/CommonBullet/target/
+/*/target/
+
 /.idea/
+

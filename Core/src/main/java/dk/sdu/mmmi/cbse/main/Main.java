@@ -81,19 +81,14 @@ public class Main extends Application {
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
         }
-
         render();
-
         window.setScene(scene);
         window.setTitle("ASTEROIDS");
         window.show();
-
     }
 
     private void render() {
         new AnimationTimer() {
-            private long then = 0;
-
             @Override
             public void handle(long now) {
                 update();
@@ -105,8 +100,6 @@ public class Main extends Application {
     }
 
     private void update() {
-
-        // Update
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
