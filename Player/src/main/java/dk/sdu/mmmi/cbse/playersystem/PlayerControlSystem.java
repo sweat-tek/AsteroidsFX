@@ -32,8 +32,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 player.setX(player.getX() + changeX);
                 player.setY(player.getY() + changeY);
             }
-            if(gameData.getKeys().isDown(GameKeys.SPACE)) {
-                System.out.println("pressed space ");
+            if(gameData.getKeys().isDown(GameKeys.SPACE)) {                
                 getBulletSPIs().stream().findFirst().ifPresent(
                         spi -> {world.addEntity(spi.createBullet(player, gameData));}
                 );

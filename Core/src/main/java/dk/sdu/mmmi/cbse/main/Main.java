@@ -7,10 +7,7 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
@@ -103,13 +100,21 @@ public class Main extends Application {
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
-//        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
-//            postEntityProcessorService.process(gameData, world);
-//        }
+        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+            postEntityProcessorService.process(gameData, world);
+        }       
     }
 
-    private void draw() {
-        for (Entity entity : world.getEntities()) {
+    private void draw() {        
+        for (Entity polygonEntity : polygons.keySet()) {
+            if(!world.getEntities().contains(polygonEntity)){   
+                Polygon removedPolygon = polygons.get(polygonEntity);               
+                polygons.remove(polygonEntity);                      
+                gameWindow.getChildren().remove(removedPolygon);
+            }
+        }
+                
+        for (Entity entity : world.getEntities()) {                      
             Polygon polygon = polygons.get(entity);
             if (polygon == null) {
                 polygon = new Polygon(entity.getPolygonCoordinates());
