@@ -11,7 +11,8 @@ public class Entity implements Serializable {
     private double x;
     private double y;
     private double rotation;
-            
+    private double radius;
+
 
     public String getID() {
         return ID.toString();
@@ -51,6 +52,12 @@ public class Entity implements Serializable {
     public double getRotation() {
         return rotation;
     }
-        
 
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public double getRadius() {
+        return this.radius;
+    }
 }
