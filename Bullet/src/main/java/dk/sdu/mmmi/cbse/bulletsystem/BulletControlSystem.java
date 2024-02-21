@@ -27,7 +27,7 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
 
         bullet.setX(shooter.getX());
         bullet.setY(shooter.getY());
-        //bullet.setPolygonCoordinates(0,0,0,1,5,1,5,0);
+
         bullet.setPolygonCoordinates(0,0,0,5,5,1,0,0);
         bullet.setRotation(shooter.getRotation());
 
