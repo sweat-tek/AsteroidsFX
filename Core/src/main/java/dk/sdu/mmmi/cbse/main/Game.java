@@ -45,13 +45,6 @@ class Game {
     }
 
     public void start(Stage window) throws Exception {
-
-        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(ModuleConfig.class);
-
-        for (String beanName : ctx.getBeanDefinitionNames()) {
-            System.out.println(beanName);
-        }
-
         Text text = new Text(10, 20, "Destroyed asteroids: 0");
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gameWindow.getChildren().add(text);
