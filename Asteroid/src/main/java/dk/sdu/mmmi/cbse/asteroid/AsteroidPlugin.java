@@ -31,55 +31,50 @@ public class AsteroidPlugin implements IGamePluginService {
     public Entity createAsteroid(GameData gameData) {
         Entity asteroid = new Asteroid();
         Random rnd = new Random();
-        int size = rnd.nextInt(12) + 7;
+        double size = rnd.nextDouble(7,20);
         asteroid.setPolygonCoordinates(size, -size, -size, -size, -size, size, size, size);
         asteroid.setX(0);
         asteroid.setY(0);
-        asteroid.setRadius(size);
-        asteroid.setRotation(rnd.nextInt(90));
+        asteroid.setRotation(rnd.nextInt(0,360));
 
         asteroid.setX(rnd.nextInt(gameData.getDisplayWidth()));
         asteroid.setY(rnd.nextInt(gameData.getDisplayHeight()));
-        spawnAsteroids(asteroid, rnd.nextInt(4), gameData);
+        asteroid = spawnAsteroids(asteroid, rnd.nextInt(0,4), gameData);
 
-        double acceleration = 0.2 + rnd.nextDouble() * 0.4;
-        double direction = Math.toRadians(asteroid.getRotation());
-        double directionX = acceleration * Math.cos(direction);
-        double directionY = acceleration * Math.sin(direction);
-
-        asteroid.setDirectionX(directionX);
-        asteroid.setDirectionY(directionY);
         asteroid.setSize(size);
-        asteroid.setRadius(size * 2);
+
         return asteroid;
     }
 
-    private void spawnAsteroids(Entity asteroid, int cornerIndex, GameData gameData) {
+    private Entity spawnAsteroids(Entity asteroid, int cornerIndex, GameData gameData) {
         Random rnd = new Random();
-        int rotation = rnd.nextInt(70);
-        int x = 1;
-        int y = 1;
+        double x;
+        double y;
         switch (cornerIndex) {
             case 1:
-                y = gameData.getDisplayHeight() - 1;
-                rotation += 280;
+                y = rnd.nextDouble(0, gameData.getDisplayHeight());
+                x = 0;
+                asteroid.setRotation(rnd.nextDouble(0,180));
                 break;
             case 2:
-                x = gameData.getDisplayWidth() - 1;
-                rotation += 100;
+                y = 0;
+                x = rnd.nextDouble(0, gameData.getDisplayWidth());
+                asteroid.setRotation(rnd.nextDouble(180,360)); // Upside of the screen
                 break;
             case 3:
-                x = gameData.getDisplayWidth() - 1;
-                y = gameData.getDisplayHeight() - 1;
-                rotation += 190;
+                y = 0;
+                x = rnd.nextDouble(0, gameData.getDisplayWidth());
+                asteroid.setRotation(rnd.nextDouble(0,180)); // Downside of the screen
                 break;
             default:
-                rotation += 10;
+                y = rnd.nextDouble(0, gameData.getDisplayHeight());
+                x = 0;
+                asteroid.setRotation(rnd.nextDouble(180,360));
                 break;
         }
-        asteroid.setRotation(rotation);
         asteroid.setX(x);
         asteroid.setY(y);
+        return asteroid;
     }
 
 }

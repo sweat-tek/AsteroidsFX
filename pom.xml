@@ -18,6 +18,7 @@
         <module>CommonBullet</module>
         <module>CommonAsteroid</module>
         <module>Asteroid</module>
+        <module>Collision</module>
     </modules>
     <properties>
         <java>java</java>
