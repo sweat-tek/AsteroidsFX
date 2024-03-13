@@ -12,6 +12,34 @@ public class Entity implements Serializable {
     private double y;
     private double rotation;
     private double radius;
+
+    public double getDirectionX() {
+        return directionX;
+    }
+
+    public void setDirectionX(double directionX) {
+        this.directionX = directionX;
+    }
+
+    public double getDirectionY() {
+        return directionY;
+    }
+
+    public void setDirectionY(double directionY) {
+        this.directionY = directionY;
+    }
+
+    public double getSize() {
+        return size;
+    }
+
+    public void setSize(double size) {
+        this.size = size;
+    }
+
+    private double directionX;
+    private double directionY;
+    private double size;
             
 
     public String getID() {
