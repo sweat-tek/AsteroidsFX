@@ -31,34 +31,22 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 player.setX(player.getX() + changeX);
                 player.setY(player.getY() + changeY);
             }
+
             if(gameData.getKeys().isDown(GameKeys.SPACE)) {
                 System.out.println("Pressed space");
                 getBulletSPIs().stream().findFirst().ifPresent(
                         spi -> {world.addEntity(spi.createBullet(player, gameData));}
-                );
-            }
+                ); }
             
-        if (player.getX() < 0) {
-            player.setX(1);
-        }
+        if (player.getX() < 0) { player.setX(1); }
 
-        if (player.getX() > gameData.getDisplayWidth()) {
-            player.setX(gameData.getDisplayWidth()-1);
-        }
+        if (player.getX() > gameData.getDisplayWidth()) { player.setX(gameData.getDisplayWidth() - 1); }
 
-        if (player.getY() < 0) {
-            player.setY(1);
-        }
+        if (player.getY() < 0) { player.setY(1); }
 
-        if (player.getY() > gameData.getDisplayHeight()) {
-            player.setY(gameData.getDisplayHeight()-1);
-        }
-            
-                                        
+        if (player.getY() > gameData.getDisplayHeight()) { player.setY(gameData.getDisplayHeight() - 1); }
         }
     }
 
-    private Collection<? extends BulletSPI> getBulletSPIs() {
-        return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
-    }
+    private Collection<? extends BulletSPI> getBulletSPIs() { return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList()); }
 }
