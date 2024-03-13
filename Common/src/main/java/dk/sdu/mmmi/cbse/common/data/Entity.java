@@ -11,9 +11,6 @@ public class Entity implements Serializable {
     private double x;
     private double y;
     private double rotation;
-    private double radius;
-    private double directionX;
-    private double directionY;
     private double size;
 
     public Boolean getDead() { return dead; }
@@ -21,22 +18,6 @@ public class Entity implements Serializable {
     public void setDead(Boolean dead) { this.dead = dead; }
 
     private Boolean dead = false;
-
-    public double getDirectionX() {
-        return directionX;
-    }
-
-    public void setDirectionX(double directionX) {
-        this.directionX = directionX;
-    }
-
-    public double getDirectionY() {
-        return directionY;
-    }
-
-    public void setDirectionY(double directionY) {
-        this.directionY = directionY;
-    }
 
     public double getSize() {
         return size;
