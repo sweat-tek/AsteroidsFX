@@ -32,6 +32,8 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
 
         bullet.setRotation(shooter.getRotation());
 
+        bullet.setHealth(1);
+
         return bullet;
     }
 

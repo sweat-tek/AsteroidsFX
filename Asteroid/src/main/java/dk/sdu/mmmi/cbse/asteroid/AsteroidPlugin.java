@@ -15,7 +15,7 @@ public class AsteroidPlugin implements IGamePluginService {
         int asteroidCount = 7;
 
         for (int i = 0; i < asteroidCount; i++) {
-            Entity asteroid = createAsteroid(gameData);
+            Entity asteroid = createAsteroid(null, gameData);
             world.addEntity(asteroid);
         }
     }
@@ -28,23 +28,38 @@ public class AsteroidPlugin implements IGamePluginService {
         }
     }
 
-    public Entity createAsteroid(GameData gameData) {
-        Entity asteroid = new Asteroid();
-        Random rnd = new Random();
-        double size = rnd.nextDouble(7,20);
-        asteroid.setPolygonCoordinates(size, -size, -size, -size, -size, size, size, size);
-        asteroid.setX(0);
-        asteroid.setY(0);
-        asteroid.setRotation(rnd.nextInt(0,360));
+    public Entity createAsteroid(Entity e, GameData gameData) {
+        if (e == null) {
 
-        asteroid.setX(rnd.nextInt(gameData.getDisplayWidth()));
-        asteroid.setY(rnd.nextInt(gameData.getDisplayHeight()));
-        asteroid = spawnAsteroids(asteroid, rnd.nextInt(0,4), gameData);
+            Entity asteroid = new Asteroid();
+            Random rnd = new Random();
 
-        asteroid.setSize(size);
+            double size = rnd.nextDouble(7, 20);
+            asteroid.setPolygonCoordinates(size, -size, -size, -size, -size, size, size, size);
+            asteroid = spawnAsteroids(asteroid, rnd.nextInt(0, 4), gameData);
+            asteroid.setSize(size);
 
-        return asteroid;
+            asteroid.setHealth(asteroid.getSize()*2);
+
+            return asteroid;
+        } else {
+            Entity newAsteroid = new Asteroid();
+            newAsteroid.setX(e.getX());
+            newAsteroid.setY(e.getY());
+            newAsteroid.setRotation(e.getRotation());
+
+            double size = e.getSize() / 2;
+            newAsteroid.setPolygonCoordinates(size, -size, -size, -size, -size, size, size, size);
+
+            newAsteroid.setSize(size);
+            System.out.println("Split");
+
+            newAsteroid.setHealth(newAsteroid.getSize());
+
+            return newAsteroid;
+        }
     }
+
 
     private Entity spawnAsteroids(Entity asteroid, int cornerIndex, GameData gameData) {
         Random rnd = new Random();

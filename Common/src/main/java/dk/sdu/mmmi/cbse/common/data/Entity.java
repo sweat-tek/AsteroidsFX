@@ -12,6 +12,7 @@ public class Entity implements Serializable {
     private double y;
     private double rotation;
     private double size;
+    private double health;
 
     public Boolean getDead() { return dead; }
 
@@ -62,4 +63,8 @@ public class Entity implements Serializable {
     public double getRotation() {
         return rotation;
     }
+
+    public double getHealth() { return health; }
+
+    public void setHealth(double health) { this.health = health; }
 }

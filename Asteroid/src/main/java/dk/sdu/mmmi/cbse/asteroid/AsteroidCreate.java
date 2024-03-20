@@ -13,7 +13,7 @@ public class AsteroidCreate implements IPostEntityProcessingService {
      */
     @Override
     public void process(GameData gameData, World world) {
-        System.out.println(world.getEntities(Asteroid.class).size());
+        //System.out.println(world.getEntities(Asteroid.class).size());
         if (world.getEntities(Asteroid.class).size() < 1) {
             AsteroidPlugin asteroidPlugin = new AsteroidPlugin();
             asteroidPlugin.start(gameData, world);
