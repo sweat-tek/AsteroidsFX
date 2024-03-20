@@ -1,0 +1,3 @@
+module Enemy {
+    requires Common;
+}
