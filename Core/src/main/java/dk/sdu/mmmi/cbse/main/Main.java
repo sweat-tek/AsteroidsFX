@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
+import dk.sdu.mmmi.cbse.common.util.ServiceLocator;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -38,33 +39,6 @@ public class Main extends Application {
     private static ModuleLayer layer;
 
     public static void main(String[] args) {
-
-        Path pluginsDir = Paths.get("plugins"); // Directory with plugins JARs
-
-        // Search for plugins in the plugins directory
-        ModuleFinder pluginsFinder = ModuleFinder.of(pluginsDir);
-
-        // Find all names of all found plugin modules
-        List<String> plugins = pluginsFinder
-                .findAll()
-                .stream()
-                .map(ModuleReference::descriptor)
-                .map(ModuleDescriptor::name)
-                .collect(Collectors.toList());
-
-        // Create configuration that will resolve plugin modules
-        // (verify that the graph of modules is correct)
-        Configuration pluginsConfiguration = ModuleLayer
-                .boot()
-                .configuration()
-                .resolve(pluginsFinder, ModuleFinder.of(), plugins);
-
-        // Create a module layer for plugins
-        layer = ModuleLayer
-                .boot()
-                .defineModulesWithOneLoader(pluginsConfiguration, ClassLoader.getSystemClassLoader());
-
-        
         launch(Main.class);
     }
 
@@ -165,15 +139,15 @@ public class Main extends Application {
     }
 
     private Collection<? extends IGamePluginService> getPluginServices() {
-        return ServiceLoader.load(layer, IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+        return ServiceLocator.INSTANCE.locateAll(IGamePluginService.class);
     }
 
     private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
-        return ServiceLoader.load(layer, IEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+        return ServiceLocator.INSTANCE.locateAll(IEntityProcessingService.class);
     }
 
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
-        return ServiceLoader.load(layer, IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+        return ServiceLocator.INSTANCE.locateAll(IPostEntityProcessingService.class);
     }
 
 }
