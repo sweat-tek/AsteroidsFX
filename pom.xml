@@ -19,6 +19,7 @@
         <module>CommonAsteroids</module>
         <module>Asteroids</module>
         <module>Collision</module>
+        <module>Enemy</module>
     </modules>
     <properties>
         <java>java</java>
@@ -79,7 +80,7 @@
                     <longModulepath>false</longModulepath>
                     <arguments>
                         <!--                        
-                                                On Mac Devices this line should not be commented out
+                                               On Mac Devices this line should not be commented out
                                                 <argument>-XstartOnFirstThread</argument>
                         -->
                         <argument>-Dorg.lwjgl.util.Debug=true</argument>
