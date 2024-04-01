@@ -1,6 +1,7 @@
 package dk.sdu.mmmi.cbse.enemysystem;
 
 
+import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
@@ -8,6 +9,7 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 import java.util.ServiceLoader;
 
@@ -30,6 +32,10 @@ public class EnemyControlle implements IEntityProcessingService {
                 int randomRotationChange = random.nextInt(11) - 5; // Random number between -5 and 5
                 enemy.setRotation(enemy.getRotation() + randomRotationChange);
 
+                getBulletSPIs().stream().findFirst().ifPresent(
+                        spi -> {world.addEntity(spi.createBullet(enemy, gameData));}
+                );
+
                 double changeX = Math.cos(Math.toRadians(enemy.getRotation()));
                 double changeY = Math.sin(Math.toRadians(enemy.getRotation()));
                 enemy.setX(enemy.getX() + changeX);
@@ -50,9 +56,14 @@ public class EnemyControlle implements IEntityProcessingService {
                 if (enemy.getY() > gameData.getDisplayHeight()) {
                     enemy.setY(0);
                 }
+
             }
         }
+    private List<? extends BulletSPI> getBulletSPIs() {
+        return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
+
+}
 
 
 
