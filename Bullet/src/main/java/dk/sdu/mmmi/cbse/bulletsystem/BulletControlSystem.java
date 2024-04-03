@@ -6,6 +6,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import javafx.scene.paint.Paint;
 
 public class BulletControlSystem implements IEntityProcessingService, BulletSPI {
 
@@ -33,6 +34,8 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
         bullet.setRotation(shooter.getRotation());
 
         bullet.setHealth(1);
+
+        bullet.setPaint(shooter.getPaint());
 
         return bullet;
     }

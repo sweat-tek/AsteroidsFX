@@ -11,6 +11,11 @@
     <name>Common</name>
     
     <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>21.0.2</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

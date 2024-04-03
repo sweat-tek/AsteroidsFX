@@ -7,6 +7,9 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import java.util.Random;
 
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
 public class AsteroidPlugin implements IGamePluginService {
 
     @Override
@@ -41,6 +44,8 @@ public class AsteroidPlugin implements IGamePluginService {
 
             asteroid.setHealth(asteroid.getSize()*2);
 
+            asteroid.setPaint(Color.RED);
+
             return asteroid;
         } else {
             Entity newAsteroid = new Asteroid();
@@ -55,6 +60,7 @@ public class AsteroidPlugin implements IGamePluginService {
             System.out.println("Split");
 
             newAsteroid.setHealth(newAsteroid.getSize());
+            newAsteroid.setPaint(Color.RED);
 
             return newAsteroid;
         }

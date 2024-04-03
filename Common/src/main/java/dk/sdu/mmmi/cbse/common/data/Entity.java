@@ -2,6 +2,7 @@ package dk.sdu.mmmi.cbse.common.data;
 
 import java.io.Serializable;
 import java.util.UUID;
+import javafx.scene.paint.Paint;
 
 public class Entity implements Serializable {
 
@@ -13,6 +14,11 @@ public class Entity implements Serializable {
     private double rotation;
     private double size;
     private double health;
+    private Paint paint;
+
+    public Paint getPaint() { return paint; }
+
+    public void setPaint(Paint paint) { this.paint = paint; }
 
     public Boolean getDead() { return dead; }
 
