@@ -19,9 +19,11 @@ public class PlayerControlSystem implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
             
         for (Entity player : world.getEntities(Player.class)) {
-            if (gameData.getKeys().isDown(GameKeys.LEFT)) {
-                player.setRotation(player.getRotation() - 5);                
-            }
+
+            if(player.getHealth() <= 0) { player.setDead(true); }
+
+            if (gameData.getKeys().isDown(GameKeys.LEFT)) { player.setRotation(player.getRotation() - 5); }
+
             if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
                 player.setRotation(player.getRotation() + 5);                
             }

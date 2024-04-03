@@ -16,8 +16,6 @@ public class CollisionControlSystem implements IPostEntityProcessingService {
                         + Math.pow((entity1.getY() - entity2.getY()), 2));
 
                 if (distance < entity1.getSize() || distance < entity2.getSize()) {
-                    entity1.setDead(true);
-                    entity2.setDead(true);
                     entity1.setHealth(entity1.getHealth()-entity2.getSize());
                     entity2.setHealth(entity2.getHealth()-entity1.getSize());
                 }
