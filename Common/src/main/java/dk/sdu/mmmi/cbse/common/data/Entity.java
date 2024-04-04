@@ -13,6 +13,27 @@ public class Entity implements Serializable {
     private double rotation;
     private float radius;
     private String type;
+    private int timeshoter;
+
+    public int getTimeshoter() {
+        return timeshoter;
+    }
+
+    public void setTimeshoter(int timeshoter) {
+        this.timeshoter = timeshoter;
+    }
+
+    private boolean died =false;
+
+
+    public boolean isDied() {
+        return died;
+
+    }
+
+    public void setDied(boolean died) {
+        this.died = died;
+    }
 
     public String getType() {
         return type;

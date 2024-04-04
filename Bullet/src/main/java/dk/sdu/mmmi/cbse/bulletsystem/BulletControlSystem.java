@@ -33,7 +33,6 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
                 world.removeEntity(bullet);
 
             }
-
             if (bullet.getY() > gameData.getDisplayHeight()) {
                 world.removeEntity(bullet);
             }
@@ -55,3 +54,4 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
         return bullet;
     }
 }
+

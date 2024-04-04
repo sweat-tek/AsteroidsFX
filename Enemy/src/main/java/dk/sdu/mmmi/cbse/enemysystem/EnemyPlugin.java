@@ -15,13 +15,15 @@ public class EnemyPlugin implements IGamePluginService {
 
     public Entity createEnemy(GameData gameData){
         Entity enemy = new Enemy();
+
         enemy.setPolygonCoordinates(-5,-5,10,0,-5,5);
         enemy.setX(100);
         enemy.setY(100);
         enemy.setType("enemy");
+       // enemy.setType("asteroids");//enemy
+        enemy.setTimeshoter(0);
         enemy.setRadius(8);
         return enemy;
-
 
     }
 

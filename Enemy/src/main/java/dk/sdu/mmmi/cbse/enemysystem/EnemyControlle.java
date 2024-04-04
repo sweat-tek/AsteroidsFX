@@ -22,19 +22,19 @@ import static java.util.stream.Collectors.toList;
 public class EnemyControlle implements IEntityProcessingService {
     Random random=new Random();
 
-
-
-
-
         @Override
         public void process(GameData gameData, World world) {
             for (Entity enemy : world.getEntities(Enemy.class)) {
                 int randomRotationChange = random.nextInt(11) - 5; // Random number between -5 and 5
                 enemy.setRotation(enemy.getRotation() + randomRotationChange);
 
-                getBulletSPIs().stream().findFirst().ifPresent(
-                        spi -> {world.addEntity(spi.createBullet(enemy, gameData));}
-                );
+                if (enemy.getTimeshoter()==30){
+                    getBulletSPIs().stream().findFirst().ifPresent(
+                            spi -> {world.addEntity(spi.createBullet(enemy, gameData));}
+                    );
+                    enemy.setTimeshoter(0);
+
+                }else enemy.setTimeshoter(enemy.getTimeshoter()+1);
 
                 double changeX = Math.cos(Math.toRadians(enemy.getRotation()));
                 double changeY = Math.sin(Math.toRadians(enemy.getRotation()));
@@ -56,6 +56,7 @@ public class EnemyControlle implements IEntityProcessingService {
                 if (enemy.getY() > gameData.getDisplayHeight()) {
                     enemy.setY(0);
                 }
+
 
             }
         }
