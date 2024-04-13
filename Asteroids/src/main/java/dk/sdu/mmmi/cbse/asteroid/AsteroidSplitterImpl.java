@@ -18,7 +18,6 @@ public class AsteroidSplitterImpl implements IAsteroidSplitter {
     public void createSplitAsteroid(Entity e, World world) {
         if((e.getRadius()/2) > 5) world.addEntity(createAsteroid(e));
     }
-
     private Entity createAsteroid(Entity entity) {
         Entity asteroid = new Asteroid();
         Random rnd = new Random();
