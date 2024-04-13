@@ -15,6 +15,11 @@ public class AsteroidProcessor implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
 
         for (Entity asteroid : world.getEntities(Asteroid.class)) {
+            if(asteroid.isDied()) {
+                asteroidSplitter.createSplitAsteroid(asteroid,world);
+                world.removeEntity(asteroid);
+                continue;
+            }
             double changeX = Math.cos(Math.toRadians(asteroid.getRotation()));
             double changeY = Math.sin(Math.toRadians(asteroid.getRotation()));
 
@@ -38,7 +43,6 @@ public class AsteroidProcessor implements IEntityProcessingService {
             }
 
         }
-
     }
 
     /**

@@ -25,6 +25,10 @@ public class EnemyControlle implements IEntityProcessingService {
         @Override
         public void process(GameData gameData, World world) {
             for (Entity enemy : world.getEntities(Enemy.class)) {
+                if(enemy.isDied()) {
+                    world.removeEntity(enemy);
+                    continue;
+                }
                 int randomRotationChange = random.nextInt(11) - 5; // Random number between -5 and 5
                 enemy.setRotation(enemy.getRotation() + randomRotationChange);
 

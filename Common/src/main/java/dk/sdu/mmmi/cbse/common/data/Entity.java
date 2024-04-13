@@ -14,6 +14,7 @@ public class Entity implements Serializable {
     private float radius;
     private String type;
     private int timeshoter;
+    private boolean died = false;
 
     public int getTimeshoter() {
         return timeshoter;
@@ -22,9 +23,6 @@ public class Entity implements Serializable {
     public void setTimeshoter(int timeshoter) {
         this.timeshoter = timeshoter;
     }
-
-    private boolean died =false;
-
 
     public boolean isDied() {
         return died;
