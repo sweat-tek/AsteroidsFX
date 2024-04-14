@@ -18,7 +18,9 @@ public class PlayerControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
             
-        for (Entity player : world.getEntities(Player.class)) {
+        for (Entity entity : world.getEntities(Player.class)) {
+
+            Player player = (Player) entity;
 
             if(player.getHealth() <= 0) { player.setDead(true); }
 
@@ -34,11 +36,14 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 player.setY(player.getY() + changeY);
             }
 
-            if(gameData.getKeys().isDown(GameKeys.SPACE)) {
-                //System.out.println("Pressed space");
+            if(gameData.getKeys().isDown(GameKeys.SPACE) && player.getShotCooldown() >= 10) {
                 getBulletSPIs().stream().findFirst().ifPresent(
                         spi -> {world.addEntity(spi.createBullet(player, gameData));}
-                ); }
+                );
+            player.setShotCooldown(0);
+            } else {
+                player.setShotCooldown(player.getShotCooldown() + 1);
+            }
             
         if (player.getX() < 0) { player.setX(1); }
 

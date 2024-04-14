@@ -11,6 +11,8 @@ public class AsteroidProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
 
+        AsteroidPlugin asteroidPlugin = new AsteroidPlugin();
+
         for (Entity asteroid : world.getEntities(Asteroid.class)) {
             if(asteroid.getHealth() <= 0) {
                 AsteroidSplitterImpl asteroidSplitter = new AsteroidSplitterImpl();
@@ -31,9 +33,7 @@ public class AsteroidProcessor implements IEntityProcessingService {
 
             if (asteroid.getY() > gameData.getDisplayHeight()) { asteroid.setY(0); }
 
-            if (asteroid.getDead()) {
-                System.out.println("Splitting");
-                AsteroidPlugin asteroidPlugin = new AsteroidPlugin();
+            if (asteroid.getDead() && asteroid.getSize() > 10) {
 
                 Entity nAst = asteroidPlugin.createAsteroid(asteroid, gameData);
 
