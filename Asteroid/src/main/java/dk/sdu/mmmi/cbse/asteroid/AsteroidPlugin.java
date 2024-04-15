@@ -14,7 +14,6 @@ public class AsteroidPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        Random rnd = new Random(); // If wanted to generate minimum and maximum spawns of asteroids.
         int asteroidCount = 7;
 
         for (int i = 0; i < asteroidCount; i++) {
