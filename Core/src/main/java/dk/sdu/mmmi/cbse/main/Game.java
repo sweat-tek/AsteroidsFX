@@ -35,12 +35,10 @@ public class Game extends Application {
     @Override
     public void start(Stage primaryStage) {
         loadPlugins();
-
         Scene scene = new Scene(gameWindow, 800, 600);
         primaryStage.setScene(scene);
         primaryStage.setTitle("ASTEROIDS");
         primaryStage.show();
-
         render();
     }
 
@@ -79,7 +77,6 @@ public class Game extends Application {
                 gameWindow.getChildren().remove(removedPolygon);
             }
         }
-
         for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);
             if (polygon == null) {
