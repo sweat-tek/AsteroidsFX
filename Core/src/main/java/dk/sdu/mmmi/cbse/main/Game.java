@@ -31,6 +31,7 @@ public class Game extends Application {
     public Game(List<IGamePluginService> iGamePluginServices, List<IEntityProcessingService> iEntityProcessingServices, List<IPostEntityProcessingService> iPostEntityProcessingServices) {
     }
 
+
     @Override
     public void start(Stage primaryStage) {
         loadPlugins();
