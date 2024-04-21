@@ -26,6 +26,4 @@ public class GameData {
     public int getDisplayHeight() {
         return displayHeight;
     }
-
-
 }

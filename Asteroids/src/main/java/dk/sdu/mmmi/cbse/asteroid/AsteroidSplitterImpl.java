@@ -1,17 +1,19 @@
 package dk.sdu.mmmi.cbse.asteroid;
 
-import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitter;
 import dk.sdu.mmmi.cbse.common.data.Entity;
+import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitter;
+import java.util.Random;
 
-/**
- *
- * @author corfixen
- */
-public class AsteroidSplitterImpl implements IAsteroidSplitter {
+class AsteroidSplitImpl implements IAsteroidSplitter {
 
     @Override
-    public void createSplitAsteroid(Entity e, World world) {
+    public void createSplitAsteroid(Entity entity, World world, GameData gameData) {
+        Random random = new Random();
+        for(int i = 0; i < random.nextInt(5) + 1; i++){
+            AsteroidPlugin splittedasteroid = new AsteroidPlugin();
+            world.addEntity(splittedasteroid.createAsteroid(gameData, entity));
+        }
     }
-
 }

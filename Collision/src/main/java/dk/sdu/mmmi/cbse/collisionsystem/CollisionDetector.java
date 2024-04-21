@@ -1,9 +1,9 @@
 package dk.sdu.mmmi.cbse.collisionsystem;
 
-import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
 public class CollisionDetector implements IPostEntityProcessingService {
 
@@ -18,7 +18,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
 
                 // if the two entities are identical, skip the iteration
                 if (entity1.getID().equals(entity2.getID())) {
-                    continue;                    
+                    continue;
                 }
 
                 // CollisionDetection

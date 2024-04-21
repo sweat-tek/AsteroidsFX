@@ -13,21 +13,24 @@ import java.util.Random;
  */
 public class AsteroidPlugin implements IGamePluginService {
 
+    public AsteroidPlugin() {
+    }
+
     @Override
     public void start(GameData gameData, World world) {
-        Entity asteroid = createAsteroid(gameData);
-        world.addEntity(asteroid);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
         // Remove entities
-        for (Entity asteroid : world.getEntities(Asteroid.class)) {
-            world.removeEntity(asteroid);
+        for (Entity e : world.getEntities()) {
+            if (e.getClass() == Asteroid.class) {
+                world.removeEntity(e);
+            }
         }
     }
 
-    private Entity createAsteroid(GameData gameData) {
+    Entity createAsteroid(GameData gameData, Entity entity) {
         Entity asteroid = new Asteroid();
         Random rnd = new Random();
         int size = rnd.nextInt(10) + 5;
