@@ -11,7 +11,6 @@ import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 
 @Configuration
-
 public class ModuleConfig {
     //konfigurationsklasse i Spring Framework.
 
@@ -25,6 +24,7 @@ public class ModuleConfig {
                 entityProcessingServiceList(),
                 postEntityProcessingServices());
     }
+
     @Bean
     public List<IEntityProcessingService> entityProcessingServiceList(){
         return ServiceLoader.load(IEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());

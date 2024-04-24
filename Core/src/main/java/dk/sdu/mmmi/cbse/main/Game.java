@@ -28,7 +28,19 @@ public class Game extends Application {
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
 
-    public Game(List<IGamePluginService> iGamePluginServices, List<IEntityProcessingService> iEntityProcessingServices, List<IPostEntityProcessingService> iPostEntityProcessingServices) {
+    private List<IGamePluginService> pluginServices;
+
+    private List<IEntityProcessingService> entityProcessingServices;
+    private List<IPostEntityProcessingService> postEntityProcessingServices;
+
+
+    public Game(List<IGamePluginService> iGamePluginServices,
+                List<IEntityProcessingService> iEntityProcessingServices,
+                List<IPostEntityProcessingService> iPostEntityProcessingServices)
+    {
+        pluginServices = iGamePluginServices;
+        entityProcessingServices = iEntityProcessingServices;
+        postEntityProcessingServices = iPostEntityProcessingServices;
     }
 
 
@@ -43,12 +55,12 @@ public class Game extends Application {
     }
 
     private void loadPlugins() {
-        for (IGamePluginService pluginService : getPluginServices()) {
+        for (IGamePluginService pluginService : pluginServices) {
             pluginService.start(gameData, world);
         }
     }
 
-    private void render() {
+    public void render() {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -60,11 +72,11 @@ public class Game extends Application {
     }
 
     private void update() {
-        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
+        for (IEntityProcessingService entityProcessorService : entityProcessingServices ) {
             entityProcessorService.process(gameData, world);
         }
 
-        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+        for (IPostEntityProcessingService postEntityProcessorService : postEntityProcessingServices) {
             postEntityProcessorService.process(gameData, world);
         }
     }
@@ -90,27 +102,4 @@ public class Game extends Application {
         }
     }
 
-    private Collection<? extends IGamePluginService> getPluginServices() {
-        return ServiceLoader.load(IGamePluginService.class)
-                .stream()
-                .map(ServiceLoader.Provider::get)
-                .collect(toList());
-    }
-
-    private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
-        return ServiceLoader.load(IEntityProcessingService.class)
-                .stream()
-                .map(ServiceLoader.Provider::get)
-                .collect(toList());
-    }
-    private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
-        return ServiceLoader.load(IPostEntityProcessingService.class)
-                .stream()
-                .map(ServiceLoader.Provider::get)
-                .collect(toList());
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
