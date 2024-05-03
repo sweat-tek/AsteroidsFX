@@ -8,4 +8,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
  */
 public class Player extends Entity {
 
+    public Player() {
+        super(5, Entity.entityType.PLAYER);
+    }
 }

@@ -26,7 +26,9 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
-    private final Pane gameWindow = new Pane();
+
+    private Pane gameWindow;
+
 
     public static void main(String[] args) {
         launch(Main.class);
@@ -34,7 +36,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
+        window.setResizable(false);
         Text text = new Text(10, 20, "Destroyed asteroids: 0");
+        gameWindow = new Pane();
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gameWindow.getChildren().add(text);
 
@@ -78,14 +82,22 @@ public class Main extends Application {
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
         }
+
         render();
+
         window.setScene(scene);
         window.setTitle("ASTEROIDS");
         window.show();
     }
 
     private void render() {
+
+
         new AnimationTimer() {
+            private long then = 0;
+
+
+
             @Override
             public void handle(long now) {
                 update();
@@ -97,35 +109,44 @@ public class Main extends Application {
     }
 
     private void update() {
+
+
+
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
-            postEntityProcessorService.process(gameData, world);
-        }       
+            postEntityProcessorService.postProcess(gameData, world);
+        }
     }
 
-    private void draw() {        
-        for (Entity polygonEntity : polygons.keySet()) {
-            if(!world.getEntities().contains(polygonEntity)){   
-                Polygon removedPolygon = polygons.get(polygonEntity);               
-                polygons.remove(polygonEntity);                      
-                gameWindow.getChildren().remove(removedPolygon);
-            }
-        }
-                
-        for (Entity entity : world.getEntities()) {                      
-            Polygon polygon = polygons.get(entity);
-            if (polygon == null) {
-                polygon = new Polygon(entity.getPolygonCoordinates());
+    private void draw() {
+
+        // For each entity in world, add to polygons and gameWindow to show them on screen
+        for (Entity entity : world.getEntities()) {
+            Polygon polygon = new Polygon(entity.getPolygonCoordinates());
+            if(!polygons.containsKey(entity)) {
                 polygons.put(entity, polygon);
+
                 gameWindow.getChildren().add(polygon);
             }
+        }
+
+        // Remove entities that are not in world anymore
+        polygons.forEach((key,value) -> {
+            if(!world.getEntities().contains(key)){
+                gameWindow.getChildren().remove(value);
+                polygons.remove(key);
+            }
+        });
+
+        // Standard draw logic
+        for (Entity entity : world.getEntities()) {
+            Polygon polygon = polygons.get(entity);
             polygon.setTranslateX(entity.getX());
             polygon.setTranslateY(entity.getY());
             polygon.setRotate(entity.getRotation());
         }
-
     }
 
     private Collection<? extends IGamePluginService> getPluginServices() {

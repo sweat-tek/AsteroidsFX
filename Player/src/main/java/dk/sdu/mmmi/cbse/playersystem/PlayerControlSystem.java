@@ -7,6 +7,7 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
 import java.util.Collection;
 import java.util.ServiceLoader;
@@ -18,43 +19,63 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-            
+
         for (Entity player : world.getEntities(Player.class)) {
+
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {
-                player.setRotation(player.getRotation() - 5);                
+                rotateLeft(player);
             }
+
             if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
-                player.setRotation(player.getRotation() + 5);                
+                rotateRight(player);
             }
+
             if (gameData.getKeys().isDown(GameKeys.UP)) {
-                double changeX = Math.cos(Math.toRadians(player.getRotation()));
-                double changeY = Math.sin(Math.toRadians(player.getRotation()));
-                player.setX(player.getX() + changeX);
-                player.setY(player.getY() + changeY);
+                moveForward(player);
             }
-            if(gameData.getKeys().isDown(GameKeys.SPACE)) {                
-                getBulletSPIs().stream().findFirst().ifPresent(
-                        spi -> {world.addEntity(spi.createBullet(player, gameData));}
-                );
+
+            if (gameData.getKeys().isPressed(GameKeys.SPACE)) {
+                fireBullet(player, gameData, world);
             }
-            
+
+            checkWithinBounds(player, gameData);
+        }
+    }
+
+    private void rotateRight(Entity player) {
+        player.setRotation(player.getRotation() + 5);
+    }
+
+    private void rotateLeft(Entity player) {
+        player.setRotation(player.getRotation() - 5);
+    }
+
+    private void moveForward(Entity player) {
+        double changeX = Math.cos(Math.toRadians(player.getRotation()));
+        double changeY = Math.sin(Math.toRadians(player.getRotation()));
+        player.setX(player.getX() + changeX);
+        player.setY(player.getY() + changeY);
+    }
+
+    private void fireBullet(Entity entity, GameData gameData, World world) {
+        getBulletSPIs().forEach(bulletSPI -> {
+            Entity bullet = bulletSPI.createBullet(entity, gameData);
+            world.addEntity(bullet);
+        });
+    }
+
+    private void checkWithinBounds(Entity player, GameData gameData) {
         if (player.getX() < 0) {
             player.setX(1);
         }
-
         if (player.getX() > gameData.getDisplayWidth()) {
-            player.setX(gameData.getDisplayWidth()-1);
+            player.setX(gameData.getDisplayWidth() - 1);
         }
-
         if (player.getY() < 0) {
             player.setY(1);
         }
-
         if (player.getY() > gameData.getDisplayHeight()) {
-            player.setY(gameData.getDisplayHeight()-1);
-        }
-
-                                        
+            player.setY(gameData.getDisplayHeight() - 1);
         }
     }
 

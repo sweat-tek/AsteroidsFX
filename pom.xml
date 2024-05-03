@@ -6,7 +6,7 @@
     <artifactId>asteroids.jpms</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>AsteroidsFX</name>
+    <name>AsteroidsJPMS</name>
     <repositories>
     </repositories>
 
@@ -16,18 +16,18 @@
         <module>Player</module>
         <module>Bullet</module>
         <module>CommonBullet</module>
-        <module>CommonAsteroids</module>
+        <module>Enemy</module>
         <module>Asteroids</module>
         <module>Collision</module>
-        <module>Enemy</module>
+        <module>CommonAsteroids</module>
     </modules>
     <properties>
         <java>java</java>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>        
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.9</maven.compiler.source>
         <maven.compiler.target>1.9</maven.compiler.target>
     </properties>
-    
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -35,19 +35,8 @@
                 <artifactId>javafx-controls</artifactId>
                 <version>21.0.2</version>
             </dependency>
-            <dependency>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-graphics</artifactId>
-                <version>21.0.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-base</artifactId>
-                <version>21.0.2</version>
-            </dependency>
-            
         </dependencies>
-    </dependencyManagement>    
+    </dependencyManagement>
     <build>
         <plugins>
             <plugin>
@@ -79,7 +68,7 @@
                     <workingDirectory>.</workingDirectory>
                     <longModulepath>false</longModulepath>
                     <arguments>
-                        <!--                        
+                        <!--
                                                 On Mac Devices this line should not be commented out
                                                 <argument>-XstartOnFirstThread</argument>
                         -->
@@ -93,7 +82,7 @@
                         I still wanted to do it for clarity, but for some reason that results
                         in "java.lang.module.FindException: Module monitor.observer.zero not found";
                         strange... -->
-                        <argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=127.0.0.1:8000</argument>
+                        <!--<argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=127.0.0.1:8000</argument>-->
                         <argument>--module=Core/dk.sdu.mmmi.cbse.main.Main</argument>
                         <argument>--add-modules javafx.graphics</argument>
                     </arguments>
