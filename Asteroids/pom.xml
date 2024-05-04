@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>dk.sdu.mmmi.cbse</groupId>
-            <artifactId>CommonAsteroid</artifactId>
+            <artifactId>CommonAsteroids</artifactId>
             <version>1.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

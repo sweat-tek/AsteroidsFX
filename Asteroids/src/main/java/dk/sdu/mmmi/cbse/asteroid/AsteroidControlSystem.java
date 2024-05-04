@@ -10,7 +10,7 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import java.util.Arrays;
 import java.util.Random;
 
-public class AsterioidControlSystem implements IEntityProcessingService, AsteroidSPI {
+public class AsteroidControlSystem implements IEntityProcessingService, AsteroidSPI {
 
     private final Random random = new Random();
     @Override
@@ -31,7 +31,6 @@ public class AsterioidControlSystem implements IEntityProcessingService, Asteroi
 
     private void spawnAsteroid(GameData gameData, World world) {
         Entity asteroid = new Asteroid();
-        // Vary the size of the asteroids
         asteroid.setPolygonCoordinates(
                 0*random.nextDouble(0.8,1.2),
                 0*random.nextDouble(0.8,1.2),
