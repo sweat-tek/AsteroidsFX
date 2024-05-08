@@ -56,7 +56,6 @@ public class AsteroidPlugin implements IGamePluginService {
             newAsteroid.setPolygonCoordinates(size, -size, -size, -size, -size, size, size, size);
 
             newAsteroid.setSize(size);
-            System.out.println("Split");
 
             newAsteroid.setHealth(newAsteroid.getSize());
             newAsteroid.setPaint(Color.RED);

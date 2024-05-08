@@ -7,7 +7,6 @@ import javafx.scene.paint.Paint;
 public class Entity implements Serializable {
 
     private final UUID ID = UUID.randomUUID();
-    
     private double[] polygonCoordinates;
     private double x;
     private double y;
@@ -15,6 +14,7 @@ public class Entity implements Serializable {
     private double size;
     private double health;
     private Paint paint;
+    private Boolean dead = false;
 
     public Paint getPaint() { return paint; }
 
@@ -23,8 +23,6 @@ public class Entity implements Serializable {
     public Boolean getDead() { return dead; }
 
     public void setDead(Boolean dead) { this.dead = dead; }
-
-    private Boolean dead = false;
 
     public double getSize() {
         return size;
