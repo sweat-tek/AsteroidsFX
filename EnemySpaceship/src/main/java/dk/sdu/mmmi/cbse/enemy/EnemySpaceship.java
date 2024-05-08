@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.cbse.playersystem;
+package dk.sdu.mmmi.cbse.enemy;
 
 import dk.sdu.mmmi.cbse.common.bullet.Bullet;
 import dk.sdu.mmmi.cbse.common.data.Entity;
@@ -7,11 +7,10 @@ import dk.sdu.mmmi.cbse.common.data.World;
 
 import java.util.ArrayList;
 
-public class Player extends Entity {
+public class EnemySpaceship extends Entity {
 
     private long bulletFiredTime;
     private int timesHit;
-
     private ArrayList<Bullet> bullets = new ArrayList<>();
 
     public long getBulletFiredTime() {

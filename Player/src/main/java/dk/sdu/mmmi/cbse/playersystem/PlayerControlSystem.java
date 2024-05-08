@@ -7,9 +7,10 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
-import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
+import java.security.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
@@ -21,61 +22,57 @@ public class PlayerControlSystem implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
 
         for (Entity player : world.getEntities(Player.class)) {
-
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {
-                rotateLeft(player);
+                player.setRotation(player.getRotation() - 5);
             }
-
             if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
-                rotateRight(player);
+                player.setRotation(player.getRotation() + 5);
             }
-
             if (gameData.getKeys().isDown(GameKeys.UP)) {
-                moveForward(player);
+                double changeX = Math.cos(Math.toRadians(player.getRotation()));
+                double changeY = Math.sin(Math.toRadians(player.getRotation()));
+                player.setX(player.getX() + changeX);
+                player.setY(player.getY() + changeY);
+            }
+            if (gameData.getKeys().isDown(GameKeys.SPACE) && ready(System.currentTimeMillis(), (Player) player)) {
+                // Create new Bullet and add it to world - Er dog ikke sikker på hvorfor der allerede er bullet i getBulletSPIs()
+                for(BulletSPI bullet : getBulletSPIs()) {
+                    Entity bulletEntity = bullet.createBullet(player, gameData);
+                    ((Player) player).addBullet((Bullet)bulletEntity);
+                    world.addEntity(bulletEntity);
+                }
             }
 
-            if (gameData.getKeys().isPressed(GameKeys.SPACE)) {
-                fireBullet(player, gameData, world);
+            if (player.getX() < 0) {
+                player.setX(1);
             }
 
-            checkWithinBounds(player, gameData);
+            if (player.getX() > gameData.getDisplayWidth()) {
+                player.setX(gameData.getDisplayWidth()-1);
+            }
+
+            if (player.getY() < 0) {
+                player.setY(1);
+            }
+
+            if (player.getY() > gameData.getDisplayHeight()) {
+                player.setY(gameData.getDisplayHeight()-1);
+            }
         }
     }
 
-    private void rotateRight(Entity player) {
-        player.setRotation(player.getRotation() + 5);
-    }
 
-    private void rotateLeft(Entity player) {
-        player.setRotation(player.getRotation() - 5);
-    }
+    private boolean ready(long currentTriggerTime, Player player) {
 
-    private void moveForward(Entity player) {
-        double changeX = Math.cos(Math.toRadians(player.getRotation()));
-        double changeY = Math.sin(Math.toRadians(player.getRotation()));
-        player.setX(player.getX() + changeX);
-        player.setY(player.getY() + changeY);
-    }
-
-    private void fireBullet(Entity entity, GameData gameData, World world) {
-        getBulletSPIs().forEach(bulletSPI -> {
-            Entity bullet = bulletSPI.createBullet(entity, gameData);
-            world.addEntity(bullet);
-        });
-    }
-
-    private void checkWithinBounds(Entity player, GameData gameData) {
-        if (player.getX() < 0) {
-            player.setX(1);
-        }
-        if (player.getX() > gameData.getDisplayWidth()) {
-            player.setX(gameData.getDisplayWidth() - 1);
-        }
-        if (player.getY() < 0) {
-            player.setY(1);
-        }
-        if (player.getY() > gameData.getDisplayHeight()) {
-            player.setY(gameData.getDisplayHeight() - 1);
+        long readyTime = player.getBulletFiredTime() + 200;
+        if(player.getBulletFiredTime() == 0) {
+            player.setBulletFiredTime(currentTriggerTime);
+            return true;
+        } else if (currentTriggerTime >= readyTime) {
+            player.setBulletFiredTime(currentTriggerTime);
+            return true;
+        } else {
+            return false;
         }
     }
 

@@ -16,7 +16,7 @@
         <module>Player</module>
         <module>Bullet</module>
         <module>CommonBullet</module>
-        <module>Enemy</module>
+        <module>EnemySpaceship</module>
         <module>Asteroids</module>
         <module>Collision</module>
         <module>CommonAsteroids</module>
@@ -33,6 +33,17 @@
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-controls</artifactId>
+                <version>21.0.2</version>
+            </dependency>
+            <!-- Add versions for javafx-graphics and javafx-base -->
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-graphics</artifactId>
+                <version>21.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-base</artifactId>
                 <version>21.0.2</version>
             </dependency>
         </dependencies>

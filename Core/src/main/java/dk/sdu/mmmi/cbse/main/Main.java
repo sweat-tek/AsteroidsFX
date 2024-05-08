@@ -7,16 +7,21 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
 import static java.util.stream.Collectors.toList;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -26,8 +31,8 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
-
     private Pane gameWindow;
+    private int currentEntityAmount;
 
 
     public static void main(String[] args) {
@@ -36,11 +41,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
-        window.setResizable(false);
         Text text = new Text(10, 20, "Destroyed asteroids: 0");
         gameWindow = new Pane();
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gameWindow.getChildren().add(text);
+
+//        currentEntityAmount = world.getEntities().size();
 
         Scene scene = new Scene(gameWindow);
         scene.setOnKeyPressed(event -> {
@@ -88,15 +94,12 @@ public class Main extends Application {
         window.setScene(scene);
         window.setTitle("ASTEROIDS");
         window.show();
+
     }
 
     private void render() {
-
-
         new AnimationTimer() {
             private long then = 0;
-
-
 
             @Override
             public void handle(long now) {
@@ -110,42 +113,51 @@ public class Main extends Application {
 
     private void update() {
 
+        currentEntityAmount = world.getEntities().size();
 
-
+        // Update Services
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
+
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
-            postEntityProcessorService.postProcess(gameData, world);
+            postEntityProcessorService.process(gameData, world);
         }
-    }
 
-    private void draw() {
-
-        // For each entity in world, add to polygons and gameWindow to show them on screen
+        // Check if new Entities have been added but doesn't yet have a polygon.
         for (Entity entity : world.getEntities()) {
-            Polygon polygon = new Polygon(entity.getPolygonCoordinates());
-            if(!polygons.containsKey(entity)) {
+            if(polygons.get(entity) == null) {
+                Polygon polygon = new Polygon(entity.getPolygonCoordinates());
                 polygons.put(entity, polygon);
-
                 gameWindow.getChildren().add(polygon);
             }
         }
 
-        // Remove entities that are not in world anymore
-        polygons.forEach((key,value) -> {
-            if(!world.getEntities().contains(key)){
-                gameWindow.getChildren().remove(value);
-                polygons.remove(key);
+        // Check if entities are out of Bounds and delete them
+        for (Entity entity : world.getEntities()) {
+            if(entity.outOfBounds(gameData.getDisplayHeight(), gameData.getDisplayWidth())) {
+                gameWindow.getChildren().remove(polygons.get(entity));      //remove drawing of polygon from game pane
+                polygons.remove(entity);                                    //remove polygon from polygons
+                world.removeEntity(entity);                                 //remove entity from world
             }
-        });
+        }
+    }
 
-        // Standard draw logic
+    private void draw() {
         for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);
             polygon.setTranslateX(entity.getX());
             polygon.setTranslateY(entity.getY());
             polygon.setRotate(entity.getRotation());
+        }
+
+        //Delete polygons for entities that has been removed
+        for (Entity polygonEntity : polygons.keySet()) {
+            if (!world.getEntities().contains(polygonEntity)) {
+                Polygon removedPolygon = polygons.get(polygonEntity);
+                polygons.remove(polygonEntity);
+                gameWindow.getChildren().remove(removedPolygon);
+            }
         }
     }
 
