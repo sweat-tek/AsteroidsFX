@@ -7,15 +7,13 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.ServiceLoader;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
@@ -48,10 +46,42 @@ public class Game extends Application {
     public void start(Stage primaryStage) {
         loadPlugins();
         Scene scene = new Scene(gameWindow, 800, 600);
+        scene.setOnKeyPressed(event-> {
+            if (event.getCode().equals(KeyCode.LEFT)) {
+                gameData.getKeys().setKey(GameKeys.LEFT, true);
+            }
+            if (event.getCode().equals(KeyCode.RIGHT)) {
+                gameData.getKeys().setKey(GameKeys.RIGHT, true);
+            }
+            if (event.getCode().equals(KeyCode.UP)) {
+                gameData.getKeys().setKey(GameKeys.UP, true);
+            }
+            if (event.getCode().equals(KeyCode.SPACE)) {
+                gameData.getKeys().setKey(GameKeys.SPACE, true);
+            }
+        });
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode().equals(KeyCode.LEFT)) {
+                gameData.getKeys().setKey(GameKeys.LEFT, false);
+            }
+            if (event.getCode().equals(KeyCode.RIGHT)) {
+                gameData.getKeys().setKey(GameKeys.RIGHT, false);
+            }
+            if (event.getCode().equals(KeyCode.UP)) {
+                gameData.getKeys().setKey(GameKeys.UP, false);
+            }
+            if (event.getCode().equals(KeyCode.SPACE)) {
+                gameData.getKeys().setKey(GameKeys.SPACE, false);
+            }
+
+        });
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("ASTEROIDS");
         primaryStage.show();
         render();
+
+
     }
 
     private void loadPlugins() {

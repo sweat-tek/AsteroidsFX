@@ -29,6 +29,7 @@ public class EnemyControlle implements IEntityProcessingService {
                     world.removeEntity(enemy);
                     continue;
                 }
+
                 int randomRotationChange = random.nextInt(11) - 5; // Random number between -5 and 5
                 enemy.setRotation(enemy.getRotation() + randomRotationChange);
 

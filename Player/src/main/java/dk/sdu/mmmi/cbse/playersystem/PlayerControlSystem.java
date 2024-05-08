@@ -8,9 +8,7 @@ import dk.sdu.mmmi.cbse.common.data.GameKeys;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
-import java.util.Collection;
-import java.util.Random;
-import java.util.ServiceLoader;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -29,6 +27,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 world.removeEntity(player);
                 continue;
             }
+
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {
                 player.setRotation(player.getRotation() - 5);
             }
