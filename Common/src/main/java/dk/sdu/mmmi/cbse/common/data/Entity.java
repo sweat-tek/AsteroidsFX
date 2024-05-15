@@ -8,6 +8,8 @@ public class Entity implements Serializable {
 
     private final UUID ID = UUID.randomUUID();
 
+    protected int life;
+
     private double[] polygonCoordinates;
     private double x;
     private double y;
@@ -45,6 +47,9 @@ public class Entity implements Serializable {
 
     public double getY() {
         return y;
+    }
+    public int getLife() {
+        return life;
     }
 
     public void setWidth(double width) {
