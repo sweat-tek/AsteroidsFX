@@ -30,6 +30,11 @@ public class EnemySpaceshipControlSystem implements IEntityProcessingService {
         }
     }
 
+    @Override
+    public void postProcess(GameData gameData, World world) {
+
+    }
+
     private void moveEnemySpaceship(Entity enemySpaceship) {
         double changeX = Math.cos(Math.toRadians(enemySpaceship.getRotation()));
         double changeY = Math.sin(Math.toRadians(enemySpaceship.getRotation()));

@@ -21,6 +21,11 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
     }
 
     @Override
+    public void postProcess(GameData gameData, World world) {
+
+    }
+
+    @Override
     public Entity createBullet(Entity shooter, GameData gameData) {
         Entity bullet = new Bullet();
         bullet.setX(shooter.getX());

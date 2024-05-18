@@ -62,6 +62,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
     }
 
 
+
     private boolean ready(long currentTriggerTime, Player player) {
 
         long readyTime = player.getBulletFiredTime() + 200;
@@ -75,6 +76,11 @@ public class PlayerControlSystem implements IEntityProcessingService {
             return false;
         }
     }
+    @Override
+    public void postProcess(GameData gameData, World world) {
+
+    }
+
 
     private Collection<? extends BulletSPI> getBulletSPIs() {
         return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());

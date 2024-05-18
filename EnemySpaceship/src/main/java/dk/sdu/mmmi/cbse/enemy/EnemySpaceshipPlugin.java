@@ -28,7 +28,7 @@ public class EnemySpaceshipPlugin implements IGamePluginService {
         Entity enemyShip = new EnemySpaceship();
         enemyShip.setPolygonCoordinates(-10,0,-5,3,-3,6,3,6,5,3,10,0,3,-3,-3,-3);
         enemyShip.setWidth(20);
-        enemyShip.setHeight(9);
+        enemyShip.setHeight(10);
         setStartPoint(gameData, enemyShip); // Set starting point for enemy spaceship
 
         return enemyShip;

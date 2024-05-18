@@ -17,4 +17,6 @@ public interface IEntityProcessingService {
      * @post The processing logic has the ability to change entities in the world.
      */
     void process(GameData gameData, World world);
+
+    void postProcess(GameData gameData, World world);
 }

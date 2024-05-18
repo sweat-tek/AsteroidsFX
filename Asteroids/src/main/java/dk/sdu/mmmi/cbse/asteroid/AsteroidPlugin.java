@@ -25,15 +25,13 @@ public class AsteroidPlugin implements IGamePluginService {
 
         Entity asteroid = new Asteroid();
 
-        int randomizer = (int) (Math.random() * (4-1) + 1);
-//        setNewPolygonCoordinates(asteroid, randomizer);
-        setNewPolygonCoordinates(asteroid, 3);
+        setAsteroidCoordinates(asteroid, 3);
 
-        setStartPoint(gameData, asteroid);
+        setAsteroidPosition(gameData, asteroid);
         return asteroid;
     }
 
-    public void setNewPolygonCoordinates(Entity asteroid, int newAsteroidSize) {
+    public void setAsteroidCoordinates(Entity asteroid, int newAsteroidSize) {
 
         switch(newAsteroidSize) {
             case 1:
@@ -57,33 +55,44 @@ public class AsteroidPlugin implements IGamePluginService {
         }
     }
 
-    private Entity setStartPoint (GameData gamedata, Entity astroid) {
-        int randomizer = (int) (Math.random() * (4-1) + 1);
+
+    private void setAsteroidPosition(GameData gamedata, Entity asteroid) {
         Random random = new Random();
-        switch(randomizer) {
+
+        int randomX;
+        int randomY;
+        double randomRotation;
+
+        switch ((int) (Math.random() * 4) + 1) {
             case 1:
-                astroid.setX(Math.random() * gamedata.getDisplayWidth());
-                astroid.setY(0);                                             //set enemy at top
-                astroid.setRotation(Math.random() * (180) + 0.1); //set rotation between 0 and 180
+                randomX = (int) (Math.random() * gamedata.getDisplayWidth());
+                randomY = 0;
+                randomRotation = Math.random() * 180;
                 break;
             case 2:
-                astroid.setX(Math.random() * gamedata.getDisplayWidth());
-                astroid.setY(gamedata.getDisplayHeight());                   //set enemy at bottom
-                astroid.setRotation(Math.random() * (-180) - 0.1);    //set rotation between 0 and -180
+                randomX = (int) (Math.random() * gamedata.getDisplayWidth());
+                randomY = gamedata.getDisplayHeight();
+                randomRotation = -Math.random() * 180;
                 break;
             case 3:
-                astroid.setX(0);                                             //set enemy to the left
-                astroid.setY(Math.random() * gamedata.getDisplayHeight());
-                astroid.setRotation(random.nextDouble(90 + 90) - 90);  //set rotation between -90 and 90
+                randomX = 0;
+                randomY = (int) (Math.random() * gamedata.getDisplayHeight());
+                randomRotation = random.nextDouble() * 180 - 90;
                 break;
             case 4:
-                astroid.setX(gamedata.getDisplayWidth());                    //set enemy to the right
-                astroid.setY(Math.random() * gamedata.getDisplayHeight());
-                astroid.setRotation(random.nextDouble(90 + 90) + 90);    //set rotation between 90 and -90
+                randomX = gamedata.getDisplayWidth();
+                randomY = (int) (Math.random() * gamedata.getDisplayHeight());
+                randomRotation = random.nextDouble() * 180 + 90;
                 break;
+            default:
+                // Handle unexpected case (should never happen with proper random number generation)
+                throw new IllegalStateException("Unexpected randomizer value");
         }
 
-        return astroid;
+        asteroid.setX(randomX);
+        asteroid.setY(randomY);
+        asteroid.setRotation(randomRotation);
+
     }
 
     @Override
@@ -91,5 +100,4 @@ public class AsteroidPlugin implements IGamePluginService {
         // Remove entities
         world.removeEntity(asteroid);
     }
-
 }

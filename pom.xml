@@ -20,9 +20,10 @@
         <module>Asteroids</module>
         <module>Collision</module>
         <module>CommonAsteroids</module>
+        <module>Score</module>
+
     </modules>
     <properties>
-        <java>java</java>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.9</maven.compiler.source>
         <maven.compiler.target>1.9</maven.compiler.target>
@@ -35,7 +36,6 @@
                 <artifactId>javafx-controls</artifactId>
                 <version>21.0.2</version>
             </dependency>
-            <!-- Add versions for javafx-graphics and javafx-base -->
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-graphics</artifactId>
@@ -46,6 +46,7 @@
                 <artifactId>javafx-base</artifactId>
                 <version>21.0.2</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>
@@ -75,27 +76,15 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <executable>${java}</executable>
+                    <executable>java</executable>
                     <workingDirectory>.</workingDirectory>
                     <longModulepath>false</longModulepath>
                     <arguments>
-                        <!--
-                                                On Mac Devices this line should not be commented out
-                                                <argument>-XstartOnFirstThread</argument>
-                        -->
-                        <argument>-Dorg.lwjgl.util.Debug=true</argument>
-                        <argument>-Djava.library.path=libs</argument>
+
                         <argument>--module-path=mods-mvn</argument>
                         <argument>--class-path=libs/*</argument>
-                        <!-- because spark.core is an automatic module and actually required,
-                        monitor.observer.zero would be resolved as well and does not need
-                        to be added explicitly;
-                        I still wanted to do it for clarity, but for some reason that results
-                        in "java.lang.module.FindException: Module monitor.observer.zero not found";
-                        strange... -->
-                        <!--<argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=127.0.0.1:8000</argument>-->
                         <argument>--module=Core/dk.sdu.mmmi.cbse.main.Main</argument>
-                        <argument>--add-modules javafx.graphics</argument>
+                        <argument>--add-modules javafx.controls,javafx.graphics</argument>
                     </arguments>
                 </configuration>
             </plugin>
