@@ -9,7 +9,7 @@ import dk.sdu.mmmi.cbse.common.data.World;
 public interface IGamePluginService {
 
     /**
-     * Launches the game plugin application.
+     * Launches the game plugin application
      *
      * @param gameData the current game data
      * @param world the game world

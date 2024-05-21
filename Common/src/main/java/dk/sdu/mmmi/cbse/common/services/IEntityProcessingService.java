@@ -9,7 +9,7 @@ import dk.sdu.mmmi.cbse.common.data.World;
 public interface IEntityProcessingService {
 
     /**
-     * Processes entities in the game world.
+     * Processes entities in the game world
      *
      * @param gameData the current game data
      * @param world the game world containing entities
