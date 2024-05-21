@@ -21,6 +21,7 @@
         <module>Collision</module>
         <module>CommonAsteroids</module>
         <module>Scoreboard</module>
+
     </modules>
     <properties>
         <java>java</java>
@@ -36,7 +37,6 @@
                 <artifactId>javafx-controls</artifactId>
                 <version>21.0.2</version>
             </dependency>
-            <!-- Add versions for javafx-graphics and javafx-base -->
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-graphics</artifactId>
@@ -47,6 +47,7 @@
                 <artifactId>javafx-base</artifactId>
                 <version>21.0.2</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>
