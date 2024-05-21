@@ -9,7 +9,7 @@
     <artifactId>Common</artifactId>
     <packaging>jar</packaging>
     <name>Common</name>
-    
+
     <dependencies>
     </dependencies>
     <build>
@@ -18,6 +18,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.1</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <release>21</release>
+                </configuration>
             </plugin>
         </plugins>
     </build>

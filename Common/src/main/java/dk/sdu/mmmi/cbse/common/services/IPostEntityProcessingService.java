@@ -18,6 +18,13 @@ public interface IPostEntityProcessingService {
      */
     void process(GameData gameData, World world);
 
-
+    /**
+     * Executes post-processing operations on entities in the game world.
+     *
+     * @param gameData the current game data
+     * @param world the game world containing entities
+     * @pre gameData and world must not be null
+     * @post additional post-processing operations may be applied to entities or game state
+     */
     void postProcess(GameData gameData, World world);
 }
