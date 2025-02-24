@@ -29,22 +29,6 @@
     
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-controls</artifactId>
-                <version>21.0.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-graphics</artifactId>
-                <version>21.0.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-base</artifactId>
-                <version>21.0.2</version>
-            </dependency>
-            
         </dependencies>
     </dependencyManagement>    
     <build>
