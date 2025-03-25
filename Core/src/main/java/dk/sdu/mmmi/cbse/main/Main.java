@@ -36,7 +36,6 @@ public class Main extends Application {
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
-    private static ModuleLayer layer;
 
     public static void main(String[] args) {
         launch(Main.class);
