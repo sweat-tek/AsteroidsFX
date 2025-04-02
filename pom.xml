@@ -20,7 +20,8 @@
         <module>Asteroids</module>
         <module>Collision</module>
     </modules>
-    <properties>    
+    <properties>
+        <java>java</java>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>        
         <maven.compiler.source>1.9</maven.compiler.source>
         <maven.compiler.target>1.9</maven.compiler.target>
@@ -62,7 +63,7 @@
                         <argument>--module-path=mods-mvn</argument>
                         <argument>--class-path=libs/*</argument>
                         <argument>--module=Core/dk.sdu.mmmi.cbse.main.Main</argument>
-                        <argument>--add-modules javafx.controls,javafx.graphics</argument>
+                        <argument>--add-modules javafx.graphics</argument>
                     </arguments>
                 </configuration>
             </plugin>
