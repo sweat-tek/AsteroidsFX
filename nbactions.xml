@@ -3,8 +3,9 @@
         <action>
             <actionName>CUSTOM-exec</actionName>
             <displayName>exec</displayName>
+            <recursive>false</recursive>
             <goals>
-                <goal>exec:exec</goal>
+                <goal>exec:exec</goal>              
             </goals>
         </action>
     </actions>
