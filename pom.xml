@@ -104,8 +104,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <inherited>false</inherited>
+                <version> 3.5.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -114,18 +113,12 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <executable>${java}</executable>
+                    <executable>java</executable>
                     <workingDirectory>.</workingDirectory>
-                    <longModulepath>false</longModulepath>
                     <arguments>
-                        <!--                        
-                                                On Mac Devices this line should not be commented out
-                                                <argument>-XstartOnFirstThread</argument>
-                        -->
-                        <argument>-Dorg.lwjgl.util.Debug=true</argument>
-                        <argument>-Djava.library.path=libs</argument>
                         <argument>--module-path=mods-mvn</argument>
                         <argument>--class-path=libs/*</argument>
+
                         <!-- because spark.core is an automatic module and actually required,
                         monitor.observer.zero would be resolved as well and does not need
                         to be added explicitly;
