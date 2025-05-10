@@ -1,6 +1,5 @@
 module Core {
     requires Common;
-
     requires CommonBullet;    
     requires javafx.graphics;   
     requires spring.context;
@@ -19,6 +18,7 @@ module Core {
     uses dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
     uses dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
     uses dk.sdu.mmmi.cbse.core.plugin.PluginService; 
+    uses dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
     
     provides dk.sdu.mmmi.cbse.core.plugin.PluginService 
         with dk.sdu.mmmi.cbse.core.plugin.impl.CorePluginServiceImpl;
