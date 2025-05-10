@@ -9,20 +9,25 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 public class BulletPlugin implements BulletSPI {
     @Override
     public Entity createBullet(Entity shooter, GameData gameData) {
+        // Debug print
+        System.out.println("Creating bullet from shooter at position: (" + shooter.getX() + ", " + shooter.getY() + ")");
+        
         Bullet bullet = new Bullet();
         
-        // Convert rotation to radians
+        // Calculate starting position at the tip of the shooter
         double radians = Math.toRadians(shooter.getRotation());
         
-        // Calculate the offset from the shooter's position (using shooter's radius + bullet's radius)
-        double offsetDistance = shooter.getRadius() + bullet.getRadius() + 5;
+        // Position bullet at the edge of the shooter (using shooter's radius)
+        double distance = shooter.getRadius() + bullet.getRadius();
+        double startX = shooter.getX() + Math.cos(radians) * distance;
+        double startY = shooter.getY() + Math.sin(radians) * distance;
         
-        // Set bullet's initial position at the tip of the shooter
-        bullet.setX(shooter.getX() + Math.cos(radians) * offsetDistance);
-        bullet.setY(shooter.getY() + Math.sin(radians) * offsetDistance);
-        
-        // Set the bullet's rotation to match the shooter's direction
+        bullet.setX(startX);
+        bullet.setY(startY);
         bullet.setRotation(shooter.getRotation());
+        
+        // Debug print
+        System.out.println("Bullet created at: (" + startX + ", " + startY + ") with rotation: " + bullet.getRotation());
         
         return bullet;
     }
