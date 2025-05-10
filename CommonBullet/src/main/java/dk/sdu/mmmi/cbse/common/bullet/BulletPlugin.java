@@ -13,6 +13,7 @@ public class BulletPlugin implements BulletSPI {
         System.out.println("Creating bullet from shooter at position: (" + shooter.getX() + ", " + shooter.getY() + ")");
         
         Bullet bullet = new Bullet();
+        bullet.setEntityType("BULLET");  // Set entity type
         
         // Calculate starting position at the tip of the shooter
         double radians = Math.toRadians(shooter.getRotation());

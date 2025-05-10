@@ -7,6 +7,7 @@ public class Entity implements Serializable {
 
     private final UUID ID = UUID.randomUUID();
     
+    private String entityType;
     private double[] polygonCoordinates;
     private double x;
     private double y;
@@ -18,6 +19,13 @@ public class Entity implements Serializable {
         return ID.toString();
     }
 
+    public String getEntityType() {
+        return entityType;
+    }
+
+    public void setEntityType(String entityType) {
+        this.entityType = entityType;
+    }
 
     public void setPolygonCoordinates(double... coordinates ) {
         this.polygonCoordinates = coordinates;

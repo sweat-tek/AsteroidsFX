@@ -35,6 +35,7 @@ public class AsteroidPlugin implements IGamePluginService {
 
     public Entity createRandomAsteroid(GameData gameData, Asteroid.Size size) {
         Asteroid asteroid = new Asteroid();
+        asteroid.setEntityType("ASTEROID");  // Set entity type
         asteroid.setSize(size);
         
         // Position the asteroid at a random edge of the screen
