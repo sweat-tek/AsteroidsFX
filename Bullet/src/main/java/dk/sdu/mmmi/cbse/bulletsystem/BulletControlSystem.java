@@ -1,7 +1,7 @@
 package dk.sdu.mmmi.cbse.bulletsystem;
 
 import dk.sdu.mmmi.cbse.common.bullet.Bullet;
-import dk.sdu.mmmi.cbse.common.bullet.RunTimeInstantiatorService;
+import dk.sdu.mmmi.cbse.common.bullet.RunTimeInstantiateService;
 import dk.sdu.mmmi.cbse.common.data.Color;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
@@ -14,7 +14,7 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
-public class BulletControlSystem implements IEntityProcessingService, RunTimeInstantiatorService {
+public class BulletControlSystem implements IEntityProcessingService, RunTimeInstantiateService {
 
     @Override
     public void process(GameData gameData, World world) {

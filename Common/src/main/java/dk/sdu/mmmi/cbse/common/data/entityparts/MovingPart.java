@@ -56,10 +56,10 @@ public class MovingPart implements EntityPart {
 
     @Override
     public void process(GameData gameData, Entity entity) {
-        posPostionPart postionPart = entity.getPart(PositionPart.class);
-        double x = postionPart.getX();
-        double y = postionPart.getY();
-        double radians = postionPart.getRadians();
+        PositionPart positionPart = entity.getPart(PositionPart.class);
+        double x = positionPart.getX();
+        double y = positionPart.getY();
+        double radians = positionPart.getRadians();
         float dt = gameData.getDelta();
 
         // controls turning
@@ -100,9 +100,9 @@ public class MovingPart implements EntityPart {
             y = gameData.getDisplayHeight();
         }
 
-        postionPart.setX(x);
-        postionPart.setY(y);
+        positionPart.setX(x);
+        positionPart.setY(y);
 
-        postionPart.setRadians(radians);
+        positionPart.setRadians(radians);
     }
 }

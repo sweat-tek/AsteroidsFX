@@ -11,7 +11,7 @@ public class Entity implements Serializable {
 
     public Color baseColor = Color.RED;
     public Color currentColor = this.baseColor;
-    public Color IFrameColor = Color.GOLD;
+    public Color iFrameColor = Color.GOLD;
 
     private double[] shapeX = new double[4];
     private double[] shapeY = new double[4];
