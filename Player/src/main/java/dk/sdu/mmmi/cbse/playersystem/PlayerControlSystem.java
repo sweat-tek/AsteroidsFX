@@ -1,6 +1,5 @@
 package dk.sdu.mmmi.cbse.playersystem;
 
-import dk.sdu.mmmi.cbse.common.bullet.Bullet;
 import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
@@ -32,9 +31,11 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 player.setX(player.getX() + changeX);
                 player.setY(player.getY() + changeY);
             }
-            if(gameData.getKeys().isDown(GameKeys.SPACE)) {                
+            if(gameData.getKeys().isDown(GameKeys.SPACE) && canFire(gameData)) {
                 getBulletSPIs().stream().findFirst().ifPresent(
-                        spi -> {world.addEntity(spi.createBullet(player, gameData));}
+                        spi -> {world.addEntity(spi.createBullet(player, gameData));
+                            gameData.setLastFiredBullet(System.currentTimeMillis());
+                        }
                 );
             }
             
@@ -56,6 +57,14 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
                                         
         }
+    }
+
+    private boolean canFire(GameData gameData) {
+        long currentTime = System.currentTimeMillis();
+        int fireRate = gameData.getFireRate();
+        int bulletCooldown = gameData.getBulletCooldown();
+        long lastFiredBullet = gameData.getLastFiredBullet();
+        return (currentTime - lastFiredBullet >= bulletCooldown/fireRate);
     }
 
     private Collection<? extends BulletSPI> getBulletSPIs() {

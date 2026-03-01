@@ -1,5 +1,8 @@
 module Core {
     requires Common;
+    requires javafx.graphics;    
+    opens dk.sdu.mmmi.cbse.main to javafx.graphics;
+
 
     requires CommonBullet;    
     requires javafx.graphics;   

@@ -20,6 +20,10 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>dk.sdu.mmmi.cbse</groupId>
+            <artifactId>Player</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
