@@ -2,6 +2,8 @@ package dk.sdu.mmmi.cbse.common.data;
 
 import java.io.Serializable;
 import java.util.UUID;
+import javafx.scene.paint.Color;
+
 
 public class Entity implements Serializable {
 
@@ -12,7 +14,16 @@ public class Entity implements Serializable {
     private double y;
     private double rotation;
     private float radius;
-            
+
+    private Color color = Color.WHITE; // default is white
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
     public String getID() {
         return ID.toString();

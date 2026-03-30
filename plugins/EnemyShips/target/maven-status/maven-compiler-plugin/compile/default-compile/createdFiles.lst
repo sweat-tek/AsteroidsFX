@@ -1,0 +1,4 @@
+module-info.class
+dk/sdu/mmmi/cbse/enemies/EnemyControlSystem.class
+dk/sdu/mmmi/cbse/enemies/EnemyPlugin.class
+dk/sdu/mmmi/cbse/enemies/Enemy.class

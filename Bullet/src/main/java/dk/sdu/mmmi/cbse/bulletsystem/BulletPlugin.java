@@ -20,6 +20,7 @@ public class BulletPlugin implements IGamePluginService {
         for (Entity e : world.getEntities()) {
             if (e.getClass() == Bullet.class) {
                 world.removeEntity(e);
+
             }
         }
     }

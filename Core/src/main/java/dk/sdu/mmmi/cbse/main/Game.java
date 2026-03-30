@@ -19,16 +19,24 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
  * @author jcs
  */
 class Game {
+    private int enemyKills = 0;
+    private int asteroidKills = 0;
+
+    private final Text asteroidKillText = new Text(10, 20, "Asteroids destroyed: 0");
+    private final Text enemyKillText = new Text(10, 40, "Enemies destroyed: 0");
 
     private final GameData gameData = new GameData();
     private final World world = new World();
@@ -45,9 +53,8 @@ class Game {
     }
 
     public void start(Stage window) throws Exception {
-        Text text = new Text(10, 20, "Destroyed asteroids: 0");
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        gameWindow.getChildren().add(text);
+        gameWindow.getChildren().addAll(asteroidKillText, enemyKillText);
 
         Scene scene = new Scene(gameWindow);
         scene.setOnKeyPressed(event -> {
@@ -77,18 +84,20 @@ class Game {
             if (event.getCode().equals(KeyCode.SPACE)) {
                 gameData.getKeys().setKey(GameKeys.SPACE, false);
             }
-
         });
 
-        // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : getGamePluginServices()) {
-            iGamePlugin.start(gameData, world);
+        for (IGamePluginService plugin : gamePluginServices) {
+            plugin.start(gameData, world);
         }
+
         for (Entity entity : world.getEntities()) {
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
+            polygon.setFill(entity.getColor());
+            polygon.setStroke(Color.BLACK);
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
         }
+
         window.setScene(scene);
         window.setTitle("ASTEROIDS");
         window.show();
@@ -96,46 +105,73 @@ class Game {
 
     public void render() {
         new AnimationTimer() {
+            private long lastUpdate = 0;
+
             @Override
             public void handle(long now) {
+                if (lastUpdate > 0) {
+                    float deltaSeconds = (now - lastUpdate) / 1_000_000_000f;
+                    gameData.setDelta(deltaSeconds);
+                }
+                lastUpdate = now;
+
                 update();
                 draw();
                 gameData.getKeys().update();
             }
-
         }.start();
     }
 
     private void update() {
-        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
-            entityProcessorService.process(gameData, world);
+        for (IEntityProcessingService processor : entityProcessingServiceList) {
+            processor.process(gameData, world);
         }
-        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
-            postEntityProcessorService.process(gameData, world);
+        for (IPostEntityProcessingService postProcessor : postEntityProcessingServices) {
+            postProcessor.process(gameData, world);
         }
     }
 
     private void draw() {
-        for (Entity polygonEntity : polygons.keySet()) {
-            if (!world.getEntities().contains(polygonEntity)) {
-                Polygon removedPolygon = polygons.get(polygonEntity);
-                polygons.remove(polygonEntity);
-                gameWindow.getChildren().remove(removedPolygon);
+        Set<Entity> toRemove = new HashSet<>();
+
+        for (Entity e : polygons.keySet()) {
+            if (!world.getEntities().contains(e)) {
+                String className = e.getClass().getSimpleName();
+
+                if (className.equalsIgnoreCase("Enemy")) {
+                    enemyKills++;
+                    enemyKillText.setText("Enemies destroyed: " + enemyKills);
+                } else if (className.equalsIgnoreCase("Asteroid")) {
+                    asteroidKills++;
+                    asteroidKillText.setText("Asteroids destroyed: " + asteroidKills);
+                }
+
+                Polygon p = polygons.get(e);
+                if (p != null) {
+                    gameWindow.getChildren().remove(p);
+                }
+                toRemove.add(e);
             }
         }
 
-        for (Entity entity : world.getEntities()) {
-            Polygon polygon = polygons.get(entity);
+        for (Entity e : toRemove) {
+            polygons.remove(e);
+        }
+
+        for (Entity e : world.getEntities()) {
+            Polygon polygon = polygons.get(e);
             if (polygon == null) {
-                polygon = new Polygon(entity.getPolygonCoordinates());
-                polygons.put(entity, polygon);
+                polygon = new Polygon(e.getPolygonCoordinates());
+                polygon.setFill(e.getColor());
+                polygon.setStroke(Color.BLACK);
+                polygons.put(e, polygon);
                 gameWindow.getChildren().add(polygon);
             }
-            polygon.setTranslateX(entity.getX());
-            polygon.setTranslateY(entity.getY());
-            polygon.setRotate(entity.getRotation());
-        }
 
+            polygon.setTranslateX(e.getX());
+            polygon.setTranslateY(e.getY());
+            polygon.setRotate(e.getRotation());
+        }
     }
 
     public List<IGamePluginService> getGamePluginServices() {
@@ -149,5 +185,4 @@ class Game {
     public List<IPostEntityProcessingService> getPostEntityProcessingServices() {
         return postEntityProcessingServices;
     }
-
 }

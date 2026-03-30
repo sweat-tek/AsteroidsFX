@@ -32,12 +32,12 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 player.setX(player.getX() + changeX);
                 player.setY(player.getY() + changeY);
             }
-            if(gameData.getKeys().isDown(GameKeys.SPACE)) {                
+            if(gameData.getKeys().isDown(GameKeys.SPACE)) {
                 getBulletSPIs().stream().findFirst().ifPresent(
                         spi -> {world.addEntity(spi.createBullet(player, gameData));}
                 );
             }
-            
+
         if (player.getX() < 0) {
             player.setX(1);
         }
@@ -62,3 +62,5 @@ public class PlayerControlSystem implements IEntityProcessingService {
         return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }
+
+

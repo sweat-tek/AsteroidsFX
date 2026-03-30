@@ -5,6 +5,8 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import javafx.scene.paint.Color;
+
 import java.util.Random;
 
 /**
@@ -29,6 +31,7 @@ public class AsteroidPlugin implements IGamePluginService {
 
     private Entity createAsteroid(GameData gameData) {
         Entity asteroid = new Asteroid();
+        asteroid.setColor(Color.BLACK);
         Random rnd = new Random();
         int size = rnd.nextInt(10) + 5;
         asteroid.setPolygonCoordinates(size, -size, -size, -size, -size, size, size, size);

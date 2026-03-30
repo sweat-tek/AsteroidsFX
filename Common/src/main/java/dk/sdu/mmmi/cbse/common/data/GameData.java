@@ -5,6 +5,7 @@ public class GameData {
     private int displayWidth  = 800 ;
     private int displayHeight = 800;
     private final GameKeys keys = new GameKeys();
+    private float delta = 0;
 
 
     public GameKeys getKeys() {
@@ -26,6 +27,11 @@ public class GameData {
     public int getDisplayHeight() {
         return displayHeight;
     }
+    public float getDelta() {
+        return delta;
+    }
 
-
+    public void setDelta(float delta) {
+        this.delta = delta;
+    }
 }

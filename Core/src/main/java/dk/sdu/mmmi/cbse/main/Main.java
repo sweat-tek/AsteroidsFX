@@ -6,25 +6,31 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class Main extends Application {
 
-
+    private AnnotationConfigApplicationContext context;
 
     public static void main(String[] args) {
-        launch(Main.class);
+        launch(args);
     }
 
     @Override
-    public void start(Stage window) throws Exception {
-        
-        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(ModuleConfig.class);
+    public void start(Stage stage) throws Exception {
 
-        for (String beanName : ctx.getBeanDefinitionNames()) {
-            System.out.println(beanName);
-        }
-        
-        Game game = ctx.getBean(Game.class);
-        game.start(window);
-        game.render();        
 
+        // Spring
+        context = new AnnotationConfigApplicationContext(ModuleConfig.class);
+
+
+        Game game = context.getBean(Game.class);
+
+        // Start game
+        game.start(stage);
+        game.render();
     }
 
+    @Override
+    public void stop() throws Exception {
+        if (context != null) {
+            context.close();
+        }
+    }
 }
