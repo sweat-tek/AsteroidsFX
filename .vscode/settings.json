@@ -1,0 +1,19 @@
+{
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-21",
+            "path": "/Users/jcs/Library/Java/JavaVirtualMachines/openjdk-21.0.2/Contents/Home",
+            "default": true
+        },
+        {
+            "name": "JavaSE-17",
+            "path": "/Users/jcs/Library/Java/JavaVirtualMachines/corretto-17.0.12/Contents/Home"
+        },
+        {
+            "name": "JavaSE-11",
+            "path": "/Users/jcs/Library/Java/JavaVirtualMachines/corretto-11.0.22-1/Contents/Home"
+        }
+    ],
+    "java.jdt.ls.java.home": "/Users/jcs/Library/Java/JavaVirtualMachines/openjdk-21.0.2/Contents/Home",
+    "java.configuration.updateBuildConfiguration": "interactive"
+}

@@ -21,8 +21,8 @@ public class EnemyPlugin implements IGamePluginService {
 
     private Entity createEnemy(GameData gameData) {
         Entity enemyShip = new Enemy();
-        // Create a simple triangle shape for the enemy
-        enemyShip.setPolygonCoordinates(-6,-6,12,0,-6,6);
+        // Create a hexagon shape for the enemy
+        enemyShip.setPolygonCoordinates(12,0, 6,10, -6,10, -12,0, -6,-10, 6,-10);
         // Position enemy randomly on screen
         enemyShip.setX(Math.random() * gameData.getDisplayWidth());
         enemyShip.setY(Math.random() * gameData.getDisplayHeight());
